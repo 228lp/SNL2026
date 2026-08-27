@@ -15,9 +15,7 @@
       --muted: #626262;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -87,8 +85,8 @@
 
     .resource {
       display: grid;
-      grid-template-columns: 46px minmax(0, 1fr) 26px;
-      gap: 13px;
+      grid-template-columns: 18px minmax(0, 1fr) 26px;
+      gap: 10px;
       align-items: center;
       min-height: 78px;
       padding: 14px 15px;
@@ -100,8 +98,7 @@
 
     .resource::before {
       content: "";
-      width: 44px;
-      height: 44px;
+      width: 18px;
     }
 
     .resource:hover,
@@ -152,32 +149,21 @@
     }
 
     @media (max-width: 560px) {
-      .page {
-        margin: 24px auto;
-      }
+      .page { margin: 24px auto; }
 
-      .main {
-        padding: 28px 14px;
-      }
+      .main { padding: 28px 14px; }
 
-      .authors {
-        font-size: 0.94rem;
-      }
+      .authors { font-size: 0.94rem; }
 
       .resource {
-        grid-template-columns: 42px minmax(0, 1fr) 18px;
-        gap: 11px;
+        grid-template-columns: 14px minmax(0, 1fr) 18px;
+        gap: 9px;
         padding: 13px 12px;
       }
 
-      .resource::before {
-        width: 40px;
-        height: 40px;
-      }
+      .resource::before { width: 14px; }
 
-      .resource-note {
-        font-size: 0.8rem;
-      }
+      .resource-note { font-size: 0.8rem; }
     }
   </style>
 </head>
@@ -214,7 +200,7 @@
         <a class="resource" href="#" target="_blank" rel="noopener noreferrer">
           <div>
             <span class="resource-title">Protocol Paper</span>
-            <span class="resource-note">TO BE ADDED: paper title and brief description here (if miraculously accepted)</span>
+            <span class="resource-note">TO BE ADDED: paper title and brief description here</span>
           </div>
           <div class="arrow">›</div>
         </a>
@@ -243,11 +229,6 @@
           <div class="arrow">›</div>
         </a>
       </div>
-
-      <p class="about">
-        <strong>About this page</strong>
-        This page accompanies the SNL 2026 poster.
-      </p>
     </section>
   </main>
 </body>
