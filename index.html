@@ -67,6 +67,109 @@
       line-height: 1.45;
     }
 
+    .author {
+      position: relative;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .author-button {
+      appearance: none;
+      border: 0;
+      padding: 1px 2px;
+      margin: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      font-family: inherit;
+      cursor: pointer;
+      border-bottom: 1px dotted rgba(185, 147, 50, 0.62);
+    }
+
+    .author-button:focus-visible {
+      color: var(--navy);
+      border-bottom-color: var(--navy);
+      outline: 2px solid rgba(8, 31, 93, 0.22);
+      outline-offset: 2px;
+    }
+
+    .author-menu {
+      position: absolute;
+      z-index: 20;
+      top: calc(100% + 7px);
+      left: 50%;
+      min-width: 176px;
+      padding: 6px;
+      background: #fff;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 28px rgba(8, 31, 93, 0.16);
+      opacity: 0;
+      visibility: hidden;
+      transform: translate(-50%, -4px);
+      transition: opacity 0.14s ease, transform 0.14s ease, visibility 0.14s ease;
+      text-align: left;
+      font-family: Arial, Helvetica, sans-serif;
+      font-style: normal;
+      pointer-events: none;
+    }
+
+    .author-menu::before {
+      content: "";
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      width: 10px;
+      height: 10px;
+      background: #fff;
+      border-left: 1px solid var(--border);
+      border-top: 1px solid var(--border);
+      transform: translate(-50%, 5px) rotate(45deg);
+    }
+
+    /* Invisible bridge across the small visual gap above the dropdown.
+       It keeps the parent hovered while the pointer moves from the name
+       into the menu, without changing the visible spacing. */
+    @media (hover: hover) and (pointer: fine) {
+      .author:has(.author-menu)::after {
+        content: "";
+        position: absolute;
+        z-index: 19;
+        top: 100%;
+        left: 50%;
+        width: max(100%, 176px);
+        height: 10px;
+        transform: translateX(-50%);
+      }
+    }
+
+    .author.is-open .author-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, 0);
+      pointer-events: auto;
+    }
+
+    .author-menu a {
+      position: relative;
+      z-index: 1;
+      display: block;
+      padding: 8px 10px;
+      color: var(--navy);
+      text-decoration: none;
+      font-size: 0.78rem;
+      line-height: 1.25;
+    }
+
+    .author-menu a:hover,
+    .author-menu a:focus-visible {
+      background: #f6f4ed;
+      outline: none;
+    }
+
+    .author-menu a + a {
+      border-top: 1px solid #eeeeeb;
+    }
+
     .affiliations {
       max-width: 650px;
       margin: 8px auto 0;
@@ -92,8 +195,9 @@
       padding: 14px 15px;
       color: var(--navy);
       text-decoration: none;
+      background: #fff;
       border: 1px solid var(--border);
-      transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .resource::before {
@@ -101,12 +205,46 @@
       width: 18px;
     }
 
-    .resource:hover,
     .resource:focus-visible {
-      transform: translateY(-2px);
-      border-color: #c9c9c5;
-      box-shadow: 0 8px 20px rgba(8, 31, 93, 0.10);
-      outline: none;
+      outline: 2px solid rgba(8, 31, 93, 0.28);
+      outline-offset: 3px;
+    }
+
+    /* Hover effects only run on devices with a real mouse/trackpad hover state.
+       This prevents tapped cards from staying shaded on touchscreens. */
+    @media (hover: hover) and (pointer: fine) {
+      .author-button:hover {
+        color: var(--navy);
+        border-bottom-color: var(--navy);
+      }
+
+      .author:hover .author-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translate(-50%, 0);
+        pointer-events: auto;
+      }
+
+      .resource {
+        transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+      }
+
+      .resource:hover {
+        transform: translateY(-2px);
+        border-color: #c9c9c5;
+        box-shadow: 0 8px 20px rgba(8, 31, 93, 0.10);
+      }
+    }
+
+    @media (hover: none), (pointer: coarse) {
+      .resource:hover,
+      .resource:active,
+      .resource:focus {
+        transform: none;
+        border-color: var(--border);
+        box-shadow: none;
+        background: #fff;
+      }
     }
 
     .resource-title {
@@ -155,6 +293,10 @@
 
       .authors { font-size: 0.94rem; }
 
+      .author-menu {
+        min-width: 158px;
+      }
+
       .resource {
         grid-template-columns: 14px minmax(0, 1fr) 18px;
         gap: 9px;
@@ -178,8 +320,37 @@
         A Systematic Review and Meta-analysis
       </h1>
 
-      <p class="authors">
-        Lois A Parri<sup>1</sup> Tomos Parry<sup>2</sup> Sara Les<sup>1</sup> Justine Kwek<sup>1</sup> Brechtje Post<sup>3</sup> Mirjana Bozic<sup>1</sup>
+      <p class="authors" aria-label="Authors. Select an underlined name for profile links.">
+        <span class="author">
+          <button class="author-button" type="button" aria-haspopup="true" aria-expanded="false">Lois A Parri</button><sup>1</sup>
+          <span class="author-menu">
+            <a href="https://www.psychol.cam.ac.uk/staff/lois-ann-parri" target="_blank" rel="noopener noreferrer">University profile</a>
+            <a href="https://scholar.google.com/citations?user=iQvxi4UAAAAJ&hl=en&oi=ao" target="_blank" rel="noopener noreferrer">Google Scholar</a>
+            <a href="https://loisannparri.co.uk/" target="_blank" rel="noopener noreferrer">Personal website</a>
+          </span>
+        </span>
+
+        <span>Tomos Parry<sup>2</sup></span>
+
+        <span>Sara Les<sup>1</sup></span>
+
+        <span>Justine Kwek<sup>1</sup></span>
+
+        <span class="author">
+          <button class="author-button" type="button" aria-haspopup="true" aria-expanded="false">Brechtje Post</button><sup>3</sup>
+          <span class="author-menu">
+            <a href="https://www.mmll.cam.ac.uk/people/brechtje-post" target="_blank" rel="noopener noreferrer">University profile</a>
+            <a href="https://scholar.google.com/citations?user=iCRFQ70AAAAJ&hl=en&inst=6810896796868835251" target="_blank" rel="noopener noreferrer">Google Scholar</a>
+          </span>
+        </span>
+
+        <span class="author">
+          <button class="author-button" type="button" aria-haspopup="true" aria-expanded="false">Mirjana Bozic</button><sup>1</sup>
+          <span class="author-menu">
+            <a href="https://www.psychol.cam.ac.uk/people/mirjana-bozic" target="_blank" rel="noopener noreferrer">University profile</a>
+            <a href="https://scholar.google.com/citations?user=Jk5FiqQAAAAJ&hl=en&inst=6810896796868835251" target="_blank" rel="noopener noreferrer">Google Scholar</a>
+          </span>
+        </span>
       </p>
 
       <p class="affiliations">
@@ -231,5 +402,42 @@
       </div>
     </section>
   </main>
+
+  <script>
+    const authors = document.querySelectorAll('.author');
+
+    function closeAuthorMenus(except = null) {
+      authors.forEach((author) => {
+        if (author !== except) {
+          author.classList.remove('is-open');
+          const button = author.querySelector('.author-button');
+          if (button) button.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    authors.forEach((author) => {
+      const button = author.querySelector('.author-button');
+      if (!button) return;
+
+      button.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const opening = !author.classList.contains('is-open');
+        closeAuthorMenus(author);
+        author.classList.toggle('is-open', opening);
+        button.setAttribute('aria-expanded', String(opening));
+      });
+
+    });
+
+    document.addEventListener('click', () => closeAuthorMenus());
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        closeAuthorMenus();
+        document.activeElement?.blur?.();
+      }
+    });
+  </script>
 </body>
 </html>
