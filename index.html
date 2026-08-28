@@ -126,9 +126,6 @@
       transform: translate(-50%, 5px) rotate(45deg);
     }
 
-    /* Invisible bridge across the small visual gap above the dropdown.
-       It keeps the parent hovered while the pointer moves from the name
-       into the menu, without changing the visible spacing. */
     @media (hover: hover) and (pointer: fine) {
       .author:has(.author-menu)::after {
         content: "";
@@ -210,8 +207,6 @@
       outline-offset: 3px;
     }
 
-    /* Hover effects only run on devices with a real mouse/trackpad hover state.
-       This prevents tapped cards from staying shaded on touchscreens. */
     @media (hover: hover) and (pointer: fine) {
       .author-button:hover {
         color: var(--navy);
@@ -326,15 +321,26 @@
           <span class="author-menu">
             <a href="https://www.psychol.cam.ac.uk/staff/lois-ann-parri" target="_blank" rel="noopener noreferrer">University profile</a>
             <a href="https://scholar.google.com/citations?user=iQvxi4UAAAAJ&hl=en&oi=ao" target="_blank" rel="noopener noreferrer">Google Scholar</a>
+            <a href="https://www.linkedin.com/in/lois-parri/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <a href="https://loisannparri.co.uk/" target="_blank" rel="noopener noreferrer">Personal website</a>
           </span>
         </span>
 
         <span>Tomos Parry<sup>2</sup></span>
 
-        <span>Sara Les<sup>1</sup></span>
+        <span class="author">
+          <button class="author-button" type="button" aria-haspopup="true" aria-expanded="false">Sara Les</button><sup>3</sup>
+          <span class="author-menu">
+            <a href="https://www.linkedin.com/in/sara-les-193754221/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          </span>
+        </span>
 
-        <span>Justine Kwek<sup>1</sup></span>
+        <span class="author">
+          <button class="author-button" type="button" aria-haspopup="true" aria-expanded="false">Justine Kwek</button><sup>3</sup>
+          <span class="author-menu">
+            <a href="https://www.linkedin.com/in/justine-kwek/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          </span>
+        </span>
 
         <span class="author">
           <button class="author-button" type="button" aria-haspopup="true" aria-expanded="false">Brechtje Post</button><sup>3</sup>
