@@ -15,7 +15,9 @@
       --muted: #626262;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -221,25 +223,16 @@
       }
 
       .resource {
-        transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
-      }
-
-      .resource:hover {
-        transform: translateY(-2px);
-        border-color: #c9c9c5;
-        box-shadow: 0 8px 20px rgba(8, 31, 93, 0.10);
+        transition: box-shadow 0.16s ease, border-color 0.16s ease;
       }
     }
 
-    @media (hover: none), (pointer: coarse) {
-      .resource:hover,
-      .resource:active,
-      .resource:focus {
-        transform: none;
-        border-color: var(--border);
-        box-shadow: none;
-        background: #fff;
-      }
+    .resource:hover,
+    .resource:focus-visible {
+      transform: none;
+      border-color: #c9c9c5;
+      box-shadow: 0 8px 20px rgba(8, 31, 93, 0.10);
+      outline: none;
     }
 
     .resource-title {
@@ -264,6 +257,86 @@
       text-align: right;
     }
 
+    .reference-dropdown {
+      position: relative;
+    }
+
+    .reference-dropdown-button {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 18px minmax(0, 1fr) 26px;
+      gap: 10px;
+      align-items: center;
+      padding: 14px 15px;
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--navy);
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .reference-dropdown-button:hover,
+    .reference-dropdown-button:focus-visible {
+      border-color: #c9c9c5;
+      box-shadow: 0 8px 20px rgba(8, 31, 93, 0.10);
+      outline: none;
+    }
+
+    .reference-dropdown.is-open .reference-dropdown-button {
+      border-bottom-color: #eeeeeb;
+    }
+
+    /*
+      The important change is position: static.
+      This makes the references expand within the page flow.
+    */
+
+    .reference-menu {
+      display: none;
+      position: static;
+      width: 100%;
+      max-height: none;
+      overflow: visible;
+      padding: 6px 15px 10px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-top: 0;
+      box-shadow: none;
+      text-align: left;
+    }
+
+    .reference-dropdown.is-open .reference-menu {
+      display: block;
+    }
+
+    .reference-menu a {
+      display: block;
+      padding: 12px 12px;
+      color: var(--navy);
+      text-decoration: none;
+      font-size: 0.82rem;
+      line-height: 1.4;
+    }
+
+    .reference-menu a + a {
+      border-top: 1px solid #eeeeeb;
+    }
+
+    .reference-menu a:hover,
+    .reference-menu a:focus-visible {
+      background: #f6f4ed;
+      outline: none;
+    }
+
+    .reference-dropdown .arrow {
+      transition: transform 0.15s ease;
+    }
+
+    .reference-dropdown.is-open .arrow {
+      transform: rotate(90deg);
+    }
+
     .about {
       margin: 24px auto 0;
       max-width: 620px;
@@ -282,25 +355,45 @@
     }
 
     @media (max-width: 560px) {
-      .page { margin: 24px auto; }
+      .page {
+        margin: 24px auto;
+      }
 
-      .main { padding: 28px 14px; }
+      .main {
+        padding: 28px 14px;
+      }
 
-      .authors { font-size: 0.94rem; }
+      .authors {
+        font-size: 0.94rem;
+      }
 
       .author-menu {
         min-width: 158px;
       }
 
-      .resource {
+      .resource,
+      .reference-dropdown-button {
         grid-template-columns: 14px minmax(0, 1fr) 18px;
         gap: 9px;
         padding: 13px 12px;
       }
 
-      .resource::before { width: 14px; }
+      .resource::before {
+        width: 14px;
+      }
 
-      .resource-note { font-size: 0.8rem; }
+      .resource-note {
+        font-size: 0.8rem;
+      }
+
+      .reference-menu {
+        padding-left: 9px;
+        padding-right: 9px;
+      }
+
+      .reference-menu a {
+        font-size: 0.78rem;
+      }
     }
   </style>
 </head>
@@ -308,7 +401,7 @@
 <body>
   <main class="page">
     <section class="main">
-      <p class="conference">SNL 2026 Poster · Accompanying Resources</p>
+      <p class="conference">Poster Accompanying Resources</p>
 
       <h1>
         Predictors of Second-Language Attainment among Adolescents:<br>
@@ -317,49 +410,89 @@
 
       <p class="authors" aria-label="Authors. Select an underlined name for profile links.">
         <span class="author">
-          <button class="author-button" type="button" aria-haspopup="true" aria-expanded="false">Lois A Parri</button><sup>1</sup>
+          <button class="author-button" type="button" aria-haspopup="true" aria-expanded="false">
+            Lois A Parri
+          </button><sup>1</sup>
+
           <span class="author-menu">
-            <a href="https://www.psychol.cam.ac.uk/staff/lois-ann-parri" target="_blank" rel="noopener noreferrer">University profile</a>
-            <a href="https://scholar.google.com/citations?user=iQvxi4UAAAAJ&hl=en&oi=ao" target="_blank" rel="noopener noreferrer">Google Scholar</a>
-            <a href="https://www.linkedin.com/in/lois-parri/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <a href="https://loisannparri.co.uk/" target="_blank" rel="noopener noreferrer">Personal website</a>
+            <a href="https://www.psychol.cam.ac.uk/staff/lois-ann-parri" target="_blank" rel="noopener noreferrer">
+              University profile
+            </a>
+            <a href="https://scholar.google.com/citations?user=iQvxi4UAAAAJ&hl=en&oi=ao" target="_blank" rel="noopener noreferrer">
+              Google Scholar
+            </a>
+            <a href="https://www.linkedin.com/in/lois-parri/" target="_blank" rel="noopener noreferrer">
+              LinkedIn
+            </a>
+            <a href="https://loisannparri.co.uk/" target="_blank" rel="noopener noreferrer">
+              Personal website
+            </a>
           </span>
         </span>
 
         <span class="author">
-          <button class="author-button" type="button" aria-haspopup="true" aria-expanded="false">Tomos Parry</button><sup>2</sup>
+          <button class="author-button" type="button" aria-haspopup="true" aria-expanded="false">
+            Tomos Parry
+          </button><sup>2</sup>
+
           <span class="author-menu">
-            <a href="https://www.linkedin.com/in/tomos-parry-031964437/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://www.linkedin.com/in/tomos-parry-031964437/" target="_blank" rel="noopener noreferrer">
+              LinkedIn
+            </a>
           </span>
         </span>
 
         <span class="author">
-          <button class="author-button" type="button" aria-haspopup="true" aria-expanded="false">Sara Les</button><sup>3</sup>
+          <button class="author-button" type="button" aria-haspopup="true" aria-expanded="false">
+            Sara Les
+          </button><sup>3</sup>
+
           <span class="author-menu">
-            <a href="https://www.linkedin.com/in/sara-les-193754221/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://www.linkedin.com/in/sara-les-193754221/" target="_blank" rel="noopener noreferrer">
+              LinkedIn
+            </a>
           </span>
         </span>
 
         <span class="author">
-          <button class="author-button" type="button" aria-haspopup="true" aria-expanded="false">Justine Kwek</button><sup>3</sup>
+          <button class="author-button" type="button" aria-haspopup="true" aria-expanded="false">
+            Justine Kwek
+          </button><sup>3</sup>
+
           <span class="author-menu">
-            <a href="https://www.linkedin.com/in/justine-kwek/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://www.linkedin.com/in/justine-kwek/" target="_blank" rel="noopener noreferrer">
+              LinkedIn
+            </a>
           </span>
         </span>
 
         <span class="author">
-          <button class="author-button" type="button" aria-haspopup="true" aria-expanded="false">Brechtje Post</button><sup>3</sup>
+          <button class="author-button" type="button" aria-haspopup="true" aria-expanded="false">
+            Brechtje Post
+          </button><sup>3</sup>
+
           <span class="author-menu">
-            <a href="https://www.mmll.cam.ac.uk/people/brechtje-post" target="_blank" rel="noopener noreferrer">University profile</a>
-            <a href="https://scholar.google.com/citations?user=iCRFQ70AAAAJ&hl=en&inst=6810896796868835251" target="_blank" rel="noopener noreferrer">Google Scholar</a>
+            <a href="https://www.mmll.cam.ac.uk/people/brechtje-post" target="_blank" rel="noopener noreferrer">
+              University profile
+            </a>
+            <a href="https://scholar.google.com/citations?user=iCRFQ70AAAAJ&hl=en&inst=6810896796868835251" target="_blank" rel="noopener noreferrer">
+              Google Scholar
+            </a>
           </span>
         </span>
 
         <span class="author">
-          <button class="author-button" type="button" aria-haspopup="true" aria-expanded="false">Mirjana Bozic</button><sup>1</sup>
+          <button class="author-button" type="button" aria-haspopup="true" aria-expanded="false">
+            Mirjana Bozic
+          </button><sup>1</sup>
+
           <span class="author-menu">
-            <a href="https://www.psychol.cam.ac.uk/people/mirjana-bozic" target="_blank" rel="noopener noreferrer">University profile</a>
-            <a href="https://scholar.google.com/citations?user=Jk5FiqQAAAAJ&hl=en&inst=6810896796868835251" target="_blank" rel="noopener noreferrer">Google Scholar</a>
+            <a href="https://www.psychol.cam.ac.uk/people/mirjana-bozic" target="_blank" rel="noopener noreferrer">
+              University profile
+            </a>
+            <a href="https://scholar.google.com/citations?user=Jk5FiqQAAAAJ&hl=en&inst=6810896796868835251" target="_blank" rel="noopener noreferrer">
+              Google Scholar
+            </a>
           </span>
         </span>
       </p>
@@ -371,81 +504,210 @@
       </p>
 
       <div class="resource-list">
-        <a class="resource" href="https://www.crd.york.ac.uk/PROSPERO/view/CRD420251178735" target="_blank" rel="noopener noreferrer">
+
+        <a class="resource"
+           href="https://www.crd.york.ac.uk/PROSPERO/view/CRD420251178735"
+           target="_blank"
+           rel="noopener noreferrer">
+
           <div>
             <span class="resource-title">PROSPERO Registration</span>
-            <span class="resource-note">Systematic review protocol and registration details</span>
+            <span class="resource-note">
+              Systematic review protocol and registration details
+            </span>
           </div>
+
           <div class="arrow">›</div>
         </a>
 
-                <a class="resource" href="All_Full_Heatmaps.pdf" target="_blank" rel="noopener noreferrer">
+        <a class="resource"
+           href="All_Full_Heatmaps.pdf"
+           target="_blank"
+           rel="noopener noreferrer">
+
           <div>
-            <span class="resource-title">All Full Heatmaps</span>
-            <span class="resource-note">TO BE ADDED: All heatmaps in one PDF document.</span>
+            <span class="resource-title">More Results</span>
+            <span class="resource-note">
+              Full heatmaps across all predictors
+            </span>
           </div>
+
           <div class="arrow">›</div>
         </a>
 
-                <a class="resource" href="#" target="_blank" rel="noopener noreferrer">
-          <div>
-            <span class="resource-title">References list</span>
-            <span class="resource-note">TO BE ADDED: Poster reference list with links</span>
+        <div class="reference-dropdown">
+
+          <button
+            class="reference-dropdown-button"
+            type="button"
+            aria-expanded="false"
+            aria-controls="reference-menu">
+
+            <span aria-hidden="true"></span>
+
+            <span>
+              <span class="resource-title">References list</span>
+              <span class="resource-note">
+                Full references and links for the poster
+              </span>
+            </span>
+
+            <span class="arrow" aria-hidden="true">›</span>
+          </button>
+
+          <div class="reference-menu" id="reference-menu">
+
+            <a href="https://doi.org/10.1017/S0272263116000036"
+               target="_blank"
+               rel="noopener noreferrer">
+              1. Tagarelli, K. M., Ruiz, S., Vega, J. L. M., &amp; Rebuschat, P. (2016). Variability in second language learning: The roles of individual differences, learning conditions, and linguistic complexity. <em>Studies in Second Language Acquisition</em>, 38(2), 293–316.
+            </a>
+
+            <a href="https://doi.org/10.1162/nol_a_00042"
+               target="_blank"
+               rel="noopener noreferrer">
+              2. Turker, S., Seither-Preisler, A., &amp; Reiterer, S. M. (2021). Examining individual differences in language learning: A neurocognitive model of language aptitude. <em>Neurobiology of Language</em>, 2(3), 389–415.
+            </a>
+            
+            <a href="https://doi.org/10.14746/ssllt.2022.12.2.3"
+               target="_blank"
+               rel="noopener noreferrer">
+              3. Botes, E., Dewaele, J.-M., &amp; Greiff, S. (2022). Taking stock: A meta-analysis of the effects of foreign language enjoyment. <em>Studies in Second Language Learning and Teaching</em>, 12(2), 205–232.
+            </a>
+
+            <a href="https://doi.org/10.3758/s13423-017-1315-7"
+               target="_blank"
+               rel="noopener noreferrer">
+              4. Hirosh, Z., &amp; Degani, T. (2018). Direct and indirect effects of multilingualism on novel language learning: An integrative review. <em>Psychonomic Bulletin &amp; Review</em>, 25(3), 892–916.
+            </a>
+
+            <a href="https://doi.org/10.14746/ssllt.2021.11.2.2"
+               target="_blank"
+               rel="noopener noreferrer">
+              5. Muñoz, C., &amp; Cadierno, T. (2021). How do differences in exposure affect English language learning? A comparison of teenagers in two learning environments. <em>Studies in Second Language Learning and Teaching</em>, 11(2), 185–212.
+            </a>
+
+            <a href="https://www.crd.york.ac.uk/PROSPERO/view/CRD420251178735"
+               target="_blank"
+               rel="noopener noreferrer">
+              6. Parri, L. A., Post, B., &amp; Bozic, M. (2026). Environmental and learner-level predictors of second-language attainment in adolescents: A systematic review. PROSPERO CRD420251178735.
+            </a>
+
+            <a href="https://jbi.global/critical-appraisal-tools"
+               target="_blank"
+               rel="noopener noreferrer">
+              7. Joanna Briggs Institute. (2020). JBI critical appraisal tools.
+            </a>
+
           </div>
-          <div class="arrow">›</div>
-        </a>
-        
-        <a class="resource" href="https://www.psychol.cam.ac.uk/brain-language-and-bilingualism" target="_blank" rel="noopener noreferrer">
+        </div>
+
+        <a class="resource"
+           href="https://www.psychol.cam.ac.uk/brain-language-and-bilingualism"
+           target="_blank"
+           rel="noopener noreferrer">
+
           <div>
-            <span class="resource-title">The Brain, Language, and Bilingualism Lab</span>
-            <span class="resource-note">Find out more about our work</span>
+            <span class="resource-title">
+              The Brain, Language, and Bilingualism Lab
+            </span>
+            <span class="resource-note">
+              Find out more about our work
+            </span>
           </div>
+
           <div class="arrow">›</div>
         </a>
 
-        <a class="resource" href="mailto:lap68@cam.ac.uk" target="_blank" rel="noopener noreferrer">
+        <a class="resource"
+           href="mailto:lap68@cam.ac.uk">
+
           <div>
             <span class="resource-title">Contact</span>
-            <span class="resource-note">Questions, collaboration, or follow-up</span>
+            <span class="resource-note">
+              Questions, collaboration, or follow-up
+            </span>
           </div>
+
           <div class="arrow">›</div>
         </a>
+
       </div>
     </section>
   </main>
 
   <script>
     const authors = document.querySelectorAll('.author');
+    const referenceDropdown = document.querySelector('.reference-dropdown');
+    const referenceButton = document.querySelector('.reference-dropdown-button');
 
     function closeAuthorMenus(except = null) {
       authors.forEach((author) => {
         if (author !== except) {
           author.classList.remove('is-open');
+
           const button = author.querySelector('.author-button');
-          if (button) button.setAttribute('aria-expanded', 'false');
+
+          if (button) {
+            button.setAttribute('aria-expanded', 'false');
+          }
         }
       });
     }
 
+    function closeReferenceDropdown() {
+      if (!referenceDropdown || !referenceButton) {
+        return;
+      }
+
+      referenceDropdown.classList.remove('is-open');
+      referenceButton.setAttribute('aria-expanded', 'false');
+    }
+
     authors.forEach((author) => {
       const button = author.querySelector('.author-button');
-      if (!button) return;
+
+      if (!button) {
+        return;
+      }
 
       button.addEventListener('click', (event) => {
         event.stopPropagation();
+
         const opening = !author.classList.contains('is-open');
+
         closeAuthorMenus(author);
+        closeReferenceDropdown();
+
         author.classList.toggle('is-open', opening);
         button.setAttribute('aria-expanded', String(opening));
       });
-
     });
 
-    document.addEventListener('click', () => closeAuthorMenus());
+    referenceButton?.addEventListener('click', (event) => {
+      event.stopPropagation();
+
+      const opening =
+        !referenceDropdown.classList.contains('is-open');
+
+      closeAuthorMenus();
+      closeReferenceDropdown();
+
+      if (opening) {
+        referenceDropdown.classList.add('is-open');
+        referenceButton.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    document.addEventListener('click', () => {
+      closeAuthorMenus();
+      closeReferenceDropdown();
+    });
 
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') {
         closeAuthorMenus();
+        closeReferenceDropdown();
         document.activeElement?.blur?.();
       }
     });
